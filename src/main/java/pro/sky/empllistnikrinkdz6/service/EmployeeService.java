@@ -1,19 +1,19 @@
 package pro.sky.empllistnikrinkdz6.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.function.ServerRequest;
 import pro.sky.empllistnikrinkdz6.entity.Employee;
 import pro.sky.empllistnikrinkdz6.exception.EmployeeAlreadyAddedException;
 import pro.sky.empllistnikrinkdz6.exception.EmployeeNotFoundException;
 import pro.sky.empllistnikrinkdz6.exception.EmployeeStorageIsFullException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeService {
 
     private static final int CONSTANT = 2;
-    private final List<Employee> employees = new ArrayList<>();
+    private final Map<String, Employee> employees = new HashMap<>();
 
     public Employee addEmployee(String firstName, String lastName) {
 
@@ -21,45 +21,44 @@ public class EmployeeService {
             throw new EmployeeStorageIsFullException("Превышен лемит сотрудников");
         }
 
-        Employee empl = new Employee(firstName, lastName);
-
-        if (employees.contains(empl)) {
+        String key = getKey(firstName, lastName);
+        if(employees.containsKey(key)){
             throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть");
         }
-        employees.add(empl);
+
+        Employee empl = new Employee(firstName, lastName);
+
+        employees.put(key, empl);
 
         return empl;
     }
 
     public Employee remove(String firstName, String lastName) {
-        Employee empl = new Employee(firstName, lastName);
 
-        if (!employees.contains(empl)) {
-            throw new EmployeeNotFoundException("Удалять некого, нет такого сотрудника: " + empl);
+        String key = getKey(firstName, lastName);
+
+        if (!employees.containsKey(key)) {
+            throw new EmployeeNotFoundException("Удалять некого, нет такого сотрудника: " + key);
         }
-        employees.remove(empl);
-        return empl;
+        return employees.remove(key);
     }
 
     public Employee searchEmployee(String firstName, String lastName) {
+        String key = getKey(firstName, lastName);
 
-        Employee empl = new Employee(firstName, lastName);
-
-        if (!employees.contains(empl)) {
-            throw new EmployeeNotFoundException("Нет такого сотрудника: " + empl);
+        if (!employees.containsKey(key)) {
+            throw new EmployeeNotFoundException("Нет такого сотрудника: " + key);
+        } else  {
+            return employees.get(key);
         }
-
-        for (Employee employee : employees) {
-            if (employee.equals(empl)) {
-                System.out.println(employee);
-                return employee;
-            }
-        }
-        return null;
     }
 
-    public List<Employee> getEmployeesAll() {
-        return employees;
+    public Collection<Employee> getEmployeesAll() {
+        return employees.values();
+    }
+
+    private String getKey(String firstName, String lastName){
+        return firstName + " " + lastName;
     }
 
 }
