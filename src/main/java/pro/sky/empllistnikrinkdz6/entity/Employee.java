@@ -1,4 +1,4 @@
-package pro.sky.empllistnikrinkdz6;
+package pro.sky.empllistnikrinkdz6.entity;
 
 import java.util.Objects;
 

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pro.sky</groupId>
-	<artifactId>empl-list-nikrink-dz6</artifactId>
+	<artifactId>k2_dz8-Map</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>empl-list-nikrink-dz6</name>
-	<description>Home Work 6 project for Spring Boot</description>
+	<name>k2_dz8-Map</name>
+	<description>Home Work 8 project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
