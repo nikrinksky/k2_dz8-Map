@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import pro.sky.empllistnikrinkdz6.entity.Employee;
 import pro.sky.empllistnikrinkdz6.service.EmployeeService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getEmployeesAll() {
+    public Collection<Employee> getEmployeesAll() {
         return employeeService.getEmployeesAll();
     }
 
